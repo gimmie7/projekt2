@@ -1,0 +1,201 @@
+[
+    {
+        "id": "d6ba0160.a10a1",
+        "type": "modbus-getter",
+        "z": "3d7aff06.2ae92",
+        "name": "Volt & Amp",
+        "showStatusActivities": true,
+        "showErrors": true,
+        "unitid": "1",
+        "dataType": "HoldingRegister",
+        "adr": "0",
+        "quantity": "50",
+        "server": "2ae0d7ba.397a5",
+        "x": 330,
+        "y": 200,
+        "wires": [
+            [
+                "24f857f9.3058a"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "24f857f9.3058a",
+        "type": "function",
+        "z": "3d7aff06.2ae92",
+        "name": "Parse V & A",
+        "func": "if (Array.isArray(msg.payload)) {\n  var volt1 = msg.payload[0] / 10;\n  var volt2 = msg.payload[2] / 10;\n  var volt3 = msg.payload[4] / 10;\n\n  var amp1 = msg.payload[12] / 1000;\n  var amp2 = msg.payload[14] / 1000;\n  var amp3 = msg.payload[16] / 1000;\n\n} else {\n  var volt1 = msg.payload.data[0] / 10;\n  var volt2 = msg.payload.data[2] / 10;\n  var volt3 = msg.payload.data[4] / 10;\n\n  var amp1 = msg.payload.data[12] / 1000;\n  var amp2 = msg.payload.data[14] / 1000;\n  var amp3 = msg.payload.data[16] / 1000;\n}\n\nvar databuffer = {\n  'volt1': volt1,\n  'volt2': volt2,\n  'volt3': volt3,\n  'amp1': amp1,\n  'amp2': amp2,\n  'amp3': amp3\n};\n\nglobal.set(\"databuffer\", databuffer);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 510,
+        "y": 200,
+        "wires": [
+            [
+                "dd7f7125.904e6"
+            ]
+        ],
+        "inputLabels": [
+            "modbus value"
+        ],
+        "outputLabels": [
+            "json"
+        ]
+    },
+    {
+        "id": "dd7f7125.904e6",
+        "type": "modbus-getter",
+        "z": "3d7aff06.2ae92",
+        "name": "kwh",
+        "showStatusActivities": true,
+        "showErrors": true,
+        "unitid": "1",
+        "dataType": "HoldingRegister",
+        "adr": "52",
+        "quantity": "50",
+        "server": "2ae0d7ba.397a5",
+        "x": 330,
+        "y": 300,
+        "wires": [
+            [
+                "b2c19eb6.5d2258"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "b2c19eb6.5d2258",
+        "type": "function",
+        "z": "3d7aff06.2ae92",
+        "name": "Parse kwh",
+        "func": "var databuffer = global.get(\"databuffer\");\nif (Array.isArray(msg.payload)) {\n  databuffer.kwh0plus = msg.payload[0] / 10;\n  databuffer.kwh1plus = msg.payload[12] / 10;\n  databuffer.kwh2plus = msg.payload[14] / 10;\n  databuffer.kwh3plus = msg.payload[16] / 10;\n  databuffer.kwh1minus = msg.payload[44] / 10;\n  databuffer.kwh2minus = msg.payload[46] / 10;\n  databuffer.kwh3minus = msg.payload[48] / 10;\n} else {\n  databuffer.kwh0plus = msg.payload.data[0] / 10;\n  databuffer.kwh1plus = msg.payload.data[12] / 10;\n  databuffer.kwh2plus = msg.payload.data[14] / 10;\n  databuffer.kwh3plus = msg.payload.data[16] / 10;\n  databuffer.kwh1minus = msg.payload.data[44] / 10;\n  databuffer.kwh2minus = msg.payload.data[46] / 10;\n  databuffer.kwh3minus = msg.payload.data[48] / 10;\n}\n\nglobal.set(\"databuffer\", databuffer);\nmsg.payload = databuffer;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 510,
+        "y": 300,
+        "wires": [
+            [
+                "2a630072.6bece8"
+            ]
+        ],
+        "inputLabels": [
+            "modbus value"
+        ],
+        "outputLabels": [
+            "json"
+        ]
+    },
+    {
+        "id": "2a630072.6bece8",
+        "type": "modbus-getter",
+        "z": "3d7aff06.2ae92",
+        "name": "Hz",
+        "showStatusActivities": true,
+        "showErrors": true,
+        "unitid": "1",
+        "dataType": "HoldingRegister",
+        "adr": "272",
+        "quantity": "2",
+        "server": "2ae0d7ba.397a5",
+        "x": 330,
+        "y": 380,
+        "wires": [
+            [
+                "95b5d5ed.4c0a78"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "95b5d5ed.4c0a78",
+        "type": "function",
+        "z": "3d7aff06.2ae92",
+        "name": "Parse Hz",
+        "func": "var databuffer = global.get(\"databuffer\");\n\nif (Array.isArray(msg.payload)) {\n  databuffer.hz = msg.payload[0] / 10;\n} else {\n  databuffer.hz = msg.payload.data[0] / 10;\n}\n\nglobal.set(\"databuffer\", databuffer);\nmsg.payload = databuffer;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 500,
+        "y": 380,
+        "wires": [
+            [
+                "90aa9b62.60954"
+            ]
+        ],
+        "inputLabels": [
+            "modbus value"
+        ],
+        "outputLabels": [
+            "json"
+        ]
+    },
+    {
+        "id": "90aa9b62.60954",
+        "type": "function",
+        "z": "3d7aff06.2ae92",
+        "name": "Parse SIOT input",
+        "func": "var data = msg.payload;\n\nvar json = {\n  'time': Date.now(),\n  'global': {\n    'hz': data.hz,\n    'kwh': data.kwh0plus,\n    'ampere': (data.amp1 + data.amp2 + data.amp3)\n  },\n  'phase1': {\n    'supply': global.get('phase1supply'),\n    'kwh': data.kwh1plus,\n    'volt': data.volt1,\n    'ampere': data.amp1\n  },\n  'phase2': {\n    'supply': global.get('phase2supply'),\n    'kwh': data.kwh2plus,\n    'volt': data.volt2,\n    'ampere': data.amp2\n  },\n  'phase3': {\n    'supply': global.get('phase3supply'),\n    'kwh': data.kwh3plus,\n    'volt': data.volt3,\n    'ampere': data.amp3\n  }\n}\n\nglobal.set('databuffer', null)\nmsg.payload = json;\n\nreturn msg\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 490,
+        "y": 440,
+        "wires": [
+            [
+                "5ad46439.94a8e4"
+            ]
+        ]
+    },
+    {
+        "id": "8781169e.22b1c8",
+        "type": "inject",
+        "z": "3d7aff06.2ae92",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 223.5,
+        "y": 113.25,
+        "wires": [
+            [
+                "d6ba0160.a10a1"
+            ]
+        ]
+    },
+    {
+        "id": "5ad46439.94a8e4",
+        "type": "debug",
+        "z": "3d7aff06.2ae92",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 710,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "2ae0d7ba.397a5",
+        "type": "modbus-client",
+        "z": "",
+        "name": "UART-RS485 (EM430)",
+        "clienttype": "serial",
+        "bufferCommands": true,
+        "stateLogEnabled": false,
+        "tcpHost": "127.0.0.1",
+        "tcpPort": "502",
+        "tcpType": "DEFAULT",
+        "serialPort": "/dev/ttyS0",
+        "serialType": "RTU-BUFFERD",
+        "serialBaudrate": "9600",
+        "serialDatabits": "8",
+        "serialStopbits": "1",
+        "serialParity": "none",
+        "serialConnectionDelay": "100",
+        "unit_id": 1,
+        "commandDelay": 1,
+        "clientTimeout": 1000,
+        "reconnectTimeout": 2000
+    }
+]
