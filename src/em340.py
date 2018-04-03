@@ -5,7 +5,7 @@ import serial
 #Settings
 PORT = 'COM4'
 MODE = minimalmodbus.MODE_RTU
-DEBUG_MODE = True
+DEBUG_MODE = False
 minimalmodbus.CLOSE_PORT_AFTER_EACH_CALL=True
 
 #Adapt this device to your OS and actual device path
@@ -23,10 +23,15 @@ if DEBUG_MODE:
     em340.debug = True
 
 ## Read value from EM340
-
 try:
-    temperature = em340.read_register(288, 10) # Registernumber, number of decimals
-    print(temperature)
+    temperature = em340.read_register(288, 2) # Registernumber, number of decimals
+    print("Temperature: " + str(temperature))
+
+    kw = em340.read_register(292, 2) # 0124h
+    print("kW: " + str(kw))
+
+    kva = em340.read_register(294, 2) # 0126h
+    print("kVA: " + str(kva))
 except ValueError as err:
     print("Failed to read from instrument em340")
     print(err)
