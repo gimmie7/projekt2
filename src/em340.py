@@ -3,6 +3,7 @@ import minimalmodbus
 import serial
 from datetime import datetime
 from scheduler import PeriodicScheduler
+from registers import Registers as REG
 
 #Settings
 PORT = 'COM4'
@@ -25,14 +26,14 @@ em340.mode = MODE   # rtu or ascii mode
 if DEBUG_MODE:
     em340.debug = True
 
-# This is the event to execute every time  
 def read_values():  
     """Read values from em340"""
     try:
-        temperature = em340.read_register(288, 2) # Registernumber, number of decimals
-        kw = em340.read_register(292, 2) # 0124h
-        kva = em340.read_register(294, 2) # 0126h
-        outputMsg = str(datetime.now()) + ": Temperature: " + str(temperature) + ", kW: " + str(kw) + ", kVA: " + str(kva)
+        temperature = em340.read_register(REG.PHASE1_TEMPERATURE, 2) # Registernumber, number of decimals
+        kw = em340.read_register(REG.PHASE1_KW, 2)
+        kva = em340.read_register(REG.PHASE1_KVA, 2)
+        kvar = em340.read_register(REG.PHASE1_KVAR, 2)
+        outputMsg = ('{0}: temperature={1}, kW={2}, kVA={3}, kvar={4}'.format(datetime.now(), temperature, kw, kva, kvar))
         print(outputMsg)
     except ValueError as err:
         print("Failed to read from instrument em340")
@@ -48,4 +49,4 @@ def write_values():
 INTERVAL = READ_INTERVAL
 periodic_scheduler = PeriodicScheduler()  
 periodic_scheduler.setup(INTERVAL, read_values) # it executes the event just once  
-periodic_scheduler.run() # it starts the scheduler  
+periodic_scheduler.run() # starts the scheduler  
