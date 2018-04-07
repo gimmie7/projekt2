@@ -1,20 +1,37 @@
 #!/usr/bin/env python
 import minimalmodbus
 import serial
+import argparse
 from datetime import datetime
-from scheduler import PeriodicScheduler
-from registers import Registers as REG
+from model.measurement import Measurement
+from model.registers import Registers as REG
+from helper.csvhelper import CsvHelper
+from helper.scheduler import PeriodicScheduler
 
-#Settings
-PORT = 'COM4'
+# Settings
+PORT = 'COM4'    
 MODE = minimalmodbus.MODE_RTU
 DEBUG_MODE = False
-READ_INTERVAL = 2 # in seconds
+READ_INTERVAL = 0.5 # in seconds
 minimalmodbus.CLOSE_PORT_AFTER_EACH_CALL = True
 
-#Adapt this device to your OS and actual device path
-em340 = minimalmodbus.Instrument(PORT, 1, mode=MODE) # port name, slave address (in decimal)
+# Starting options
+parser = argparse.ArgumentParser()
+parser.add_argument("--p", help="serial port where your modbus device is plugged in, e.g. COM4")
+parser.add_argument("--d", help="debug mode with additional logging", action='store_true')
+args = parser.parse_args()
 
+if args.p:
+    PORT = args.p
+
+if args.d:
+    DEBUG_MODE = True
+
+print('run script with the following settings: port={0}, mode={1}, debug mode={2}, intervall in sec={3}'
+.format(PORT, MODE, DEBUG_MODE, READ_INTERVAL))
+
+# Setup EM340
+em340 = minimalmodbus.Instrument(PORT, 1, mode=MODE) # port name, slave address (in decimal)
 em340.serial.port          # this is the serial port name
 em340.serial.baudrate = 9600   # Baud
 em340.serial.bytesize = 8
@@ -26,27 +43,28 @@ em340.mode = MODE   # rtu or ascii mode
 if DEBUG_MODE:
     em340.debug = True
 
-def read_values():  
+# Data sampling
+csvhelper = CsvHelper()
+
+def record_sample():  
     """Read values from em340"""
     try:
-        temperature = em340.read_register(REG.PHASE1_TEMPERATURE, 2) # Registernumber, number of decimals
-        kw = em340.read_register(REG.PHASE1_KW, 2)
-        kva = em340.read_register(REG.PHASE1_KVA, 2)
-        kvar = em340.read_register(REG.PHASE1_KVAR, 2)
-        outputMsg = ('{0}: temperature={1}, kW={2}, kVA={3}, kvar={4}'.format(datetime.now(), temperature, kw, kva, kvar))
+        dt = datetime.now()
+        p = em340.read_register(REG.PHASE1_KW, 0)
+        s = em340.read_register(REG.PHASE1_KVA, 0)
+        d = em340.read_register(REG.PHASE1_KVAR, 0)
+        q = 0 # TODO: get the correct value
+        outputMsg = ('{0}: P={1}W, S={2}VA, D={3}VAR, Q={4}VAR'.format(dt, p, s, d, q))
+        measurement = Measurement(dt.timestamp(), p, s, d, q)
+        csvhelper.writeMeasurement("data_samples/samples.csv", measurement)
+        
         print(outputMsg)
     except ValueError as err:
         print("Failed to read from instrument em340")
         print(err)
 
-def write_values():
-    """write values to em340"""
-    ## Write a config to the EM340
-    #SOME_VALUE = 95
-    #em340.write_register(24, SOME_VALUE, 1) # Registernumber, value, number of decimals for storage
-    return 0
-
+# Periodic reading
 INTERVAL = READ_INTERVAL
 periodic_scheduler = PeriodicScheduler()  
-periodic_scheduler.setup(INTERVAL, read_values) # it executes the event just once  
+periodic_scheduler.setup(INTERVAL, record_sample) # it executes the event just once  
 periodic_scheduler.run() # starts the scheduler  
