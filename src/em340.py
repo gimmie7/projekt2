@@ -1,18 +1,35 @@
 #!/usr/bin/env python
 import minimalmodbus
 import serial
+import argparse
 from datetime import datetime
 from scheduler import PeriodicScheduler
 from registers import Registers as REG
 
-#Settings
-PORT = 'COM4'
+# Settings
+PORT = 'COM4'    
 MODE = minimalmodbus.MODE_RTU
 DEBUG_MODE = False
-READ_INTERVAL = 2 # in seconds
+READ_INTERVAL = 1 # in seconds
 minimalmodbus.CLOSE_PORT_AFTER_EACH_CALL = True
 
-#Adapt this device to your OS and actual device path
+# Starting options
+parser = argparse.ArgumentParser()
+parser.add_argument("--p", help="serial port where your modbus device is plugged in, e.g. COM4")
+parser.add_argument("--d", help="debug mode with additional logging", action='store_true')
+args = parser.parse_args()
+
+if args.p:
+    PORT = args.p
+
+
+if args.d:
+    DEBUG_MODE = True
+
+print('run script with the following settings: port={0}, mode={1}, debug mode={2}, intervall in sec={3}'
+.format(PORT, MODE, DEBUG_MODE, READ_INTERVAL))
+
+# Adapt this device to your OS and actual device path
 em340 = minimalmodbus.Instrument(PORT, 1, mode=MODE) # port name, slave address (in decimal)
 
 em340.serial.port          # this is the serial port name
@@ -46,6 +63,7 @@ def write_values():
     #em340.write_register(24, SOME_VALUE, 1) # Registernumber, value, number of decimals for storage
     return 0
 
+# Periodic reading
 INTERVAL = READ_INTERVAL
 periodic_scheduler = PeriodicScheduler()  
 periodic_scheduler.setup(INTERVAL, read_values) # it executes the event just once  
