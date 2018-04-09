@@ -1,7 +1,7 @@
 import csv
 import os.path
 from decimal import Decimal
-from model.measurement import Measurement
+from em340.measurement import Measurement
 
 class CsvHelper(object):
     def readMeasurements(self, filename: str) -> str:

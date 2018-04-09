@@ -1,6 +1,7 @@
 from enum import IntEnum
 
 class Registers(IntEnum):
+    # Phase 1
     PHASE1_TEMPERATURE  = 288, # 0120h
     PHASE1_KW           = 290, # 0124h
     PHASE1_KVA          = 292, # 0126h
