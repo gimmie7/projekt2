@@ -1,6 +1,6 @@
 # Projekt 2
 
-Projektarbeit
+Project work
 
 ## Getting Started
 
@@ -21,7 +21,7 @@ What things you need to install the software and how to install them
 * install minimalmodbus: `pip install minimalmodbus`
 
 ### Run
-* `python em340.py`
+* `python start.py`
 
 ## Built With
 
