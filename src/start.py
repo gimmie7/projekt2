@@ -7,7 +7,7 @@ from helper.csvhelper import CsvHelper
 
 # Settings
 port = 'COM4' # serial port
-interval = 0.5 # in seconds
+interval = 1 # in seconds
 debug_mode = False
 parser = argparse.ArgumentParser()
 parser.add_argument("--p", help="serial port where your modbus device is plugged in, e.g. COM4")
@@ -31,13 +31,16 @@ csvhelper = CsvHelper()
 print('run script with the following settings: port={0}, intervall in sec={1}, debug mode={2}'
 .format(port, interval, debug_mode))
 
+timer = 0
 def write_measurement():
     """reads data from em340 and writes it to csv"""
+    global timer
     measurement = em340.read_phase1()
-    csvhelper.writeMeasurement("data_samples/samples.csv", measurement)
+    csvhelper.writeMeasurement("data_samples/samples.csv", measurement,timer)
     outputMsg = ('{0}: P={1}W, S={2}VA, D={3}VAR, Q={4}VAR'
-    .format(datetime.datetime.fromtimestamp(measurement.timestamp).strftime('%Y-%m-%d %H:%M:%S'), 
-    measurement.p, measurement.s, measurement.d, measurement.q))
+    .format(timer,measurement.p, measurement.s, measurement.d, measurement.q))
+
+    timer = timer +1
     print(outputMsg)
 
 # Periodic reading/writing

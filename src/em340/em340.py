@@ -8,7 +8,8 @@ from em340.registers import Registers as REG
 from helper.csvhelper import CsvHelper
 from helper.scheduler import PeriodicScheduler
 
-class Em340(object):                                                  
+class Em340(object):
+
     def __init__(self, port: str):                                                           
         mode = minimalmodbus.MODE_RTU
         minimalmodbus.CLOSE_PORT_AFTER_EACH_CALL = True
@@ -24,17 +25,17 @@ class Em340(object):
 
     def read_phase1(self) -> Measurement:
         """Read values from em340 phase 1"""
-        measurement = self.read_phase(1, REG.PHASE1_KW, REG.PHASE1_KVA, REG.PHASE1_KVAR, 0)
+        measurement = self.read_phase(1, REG.PHASE1_KW, REG.PHASE1_KVA, 0, REG.PHASE1_KVAR)
         return measurement
 
     def read_phase(self, phase: int, reg_p: int, reg_s: int, reg_d: int, reg_q: int) -> Measurement:
         """Read values from em340"""
         try:
             timestamp = datetime.now().timestamp()
-            p = self.em340.read_register(reg_p, 0)
-            s = self.em340.read_register(reg_s, 0)
-            d = self.em340.read_register(reg_d, 0)
-            q = 0 # TODO: get the correct value
+            p = self.em340.read_register(reg_p, 1)
+            s = self.em340.read_register(reg_s, 1)
+            d = 0
+            q = self.em340.read_register(reg_q, 1)
             return Measurement(timestamp, p, s, d, q)
         except ValueError as error:
             print("Failed to read from instrument em340")
