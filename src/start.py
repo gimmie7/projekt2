@@ -33,14 +33,15 @@ print('run script with the following settings: port={0}, intervall in sec={1}, d
 
 timer = 0
 def write_measurement():
-    """reads data from em340 and writes it to csv"""
+    '''
+    reads data from em340, writes it to csv and prints it to the default out stream
+    '''
     global timer
     measurement = em340.read_phase1()
     csvhelper.writeMeasurement("data_samples/samples.csv", measurement,timer)
     outputMsg = ('{0}: P={1}W, S={2}VA, D={3}VAR, Q={4}VAR'
-    .format(timer,measurement.p, measurement.s, measurement.d, measurement.q))
-
-    timer = timer +1
+    .format(timer, measurement.p, measurement.s, measurement.d, measurement.q))
+    timer = timer + 1
     print(outputMsg)
 
 # Periodic reading/writing

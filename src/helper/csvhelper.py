@@ -13,7 +13,7 @@ class CsvHelper(object):
         f.close()
         return result
 
-    def writeMeasurement(self, filename: str, data: Measurement,timer: float) -> None:
+    def writeMeasurement(self, filename: str, data: Measurement, timer: float) -> None:
         with open(filename, 'a', newline='') as f:
             writer = csv.writer(f, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
             writer.writerow([timer, data.p, data.s, data.d, data.q])

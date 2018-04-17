@@ -24,17 +24,29 @@ class Em340(object):
         self.em340 = em340
 
     def read_phase1(self) -> Measurement:
-        """Read values from em340 phase 1"""
-        measurement = self.read_phase(1, REG.PHASE1_KW, REG.PHASE1_KVA, 0, REG.PHASE1_KVAR)
+        '''
+        Read values from em340 phase 1\n
+        :return: the Measurement
+        '''
+        measurement = self.read_phase(1, REG.L1_WIRKLEISTUNG_P, REG.L1_SCHEINLEISTUNG_S, 0, REG.L1_BLINDLEISTUNG_Q)
         return measurement
 
+    # todo: do we need the distortion power or is it a calculated value?
     def read_phase(self, phase: int, reg_p: int, reg_s: int, reg_d: int, reg_q: int) -> Measurement:
-        """Read values from em340"""
+        '''
+        Read values from em340\n
+        :param int phase: The phase to read from. Possible values are 1, 2, 3\n
+        :param int reg_p: The register to read the real power (Wirkleistung)\n
+        :param int reg_s: The register to read the apparent power (Scheinleistung)\n
+        :param int reg_d: The register to read the distortion power (Verzerrungsleistung)\n
+        :param int reg_q: The register to read the reactive power (Blindleistung)\n
+        :return: the Measurement
+        '''
         try:
             timestamp = datetime.now().timestamp()
             p = self.em340.read_register(reg_p, 1)
             s = self.em340.read_register(reg_s, 1)
-            d = 0
+            d = 0 # todo: get value from em340; but from which register?
             q = self.em340.read_register(reg_q, 1)
             return Measurement(timestamp, p, s, d, q)
         except ValueError as error:
