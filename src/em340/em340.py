@@ -28,11 +28,11 @@ class Em340(object):
         Read values from em340 phase 1\n
         :return: the Measurement
         '''
-        measurement = self.read_phase(1, REG.L1_WIRKLEISTUNG_P, REG.L1_SCHEINLEISTUNG_S, 0, REG.L1_BLINDLEISTUNG_Q)
+        measurement = self.read_phase(1, REG.L1_WIRKLEISTUNG_P, REG.L1_SCHEINLEISTUNG_S, REG.L1_BLINDLEISTUNG_Q,REG.L1_SPANNUNG_U,REG.L1_STROM_I)
         return measurement
 
     # todo: do we need the distortion power or is it a calculated value?
-    def read_phase(self, phase: int, reg_p: int, reg_s: int, reg_d: int, reg_q: int) -> Measurement:
+    def read_phase(self, phase: int, reg_p: int, reg_s: int, reg_q: int,reg_u: int,reg_i: int) -> Measurement:
         '''
         Read values from em340\n
         :param int phase: The phase to read from. Possible values are 1, 2, 3\n
@@ -46,9 +46,10 @@ class Em340(object):
             timestamp = datetime.now().timestamp()
             p = self.em340.read_register(reg_p, 1)
             s = self.em340.read_register(reg_s, 1)
-            d = 0 # todo: get value from em340; but from which register?
             q = self.em340.read_register(reg_q, 1)
-            return Measurement(timestamp, p, s, d, q)
+            u = self.em340.read_register(reg_u, 1)
+            i = self.em340.read_register(reg_i, 3)
+            return Measurement(timestamp, p, s, q,u,i)
         except ValueError as error:
             print("Failed to read from instrument em340")
             print(error)

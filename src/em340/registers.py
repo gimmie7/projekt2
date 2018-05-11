@@ -9,5 +9,7 @@ class Registers(IntEnum):
     L1_WIRKLEISTUNG_P   = 292, # 0124h, kW L1, Watt*10
     L1_SCHEINLEISTUNG_S = 294, # 0126h, kVA L1, VA*10
     L1_BLINDLEISTUNG_Q  = 296, # 0128h, kvar L1, var*10
+    L1_SPANNUNG_U = 0, # 0000h, V L1, V*10
+    L1_STROM_I  = 12, # 000C, A L1, A*1000
 
     # note: 1 W = 1 var = 1 VA

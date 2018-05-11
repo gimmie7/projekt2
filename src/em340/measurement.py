@@ -1,5 +1,5 @@
 class Measurement(object):
-    def __init__(self, timestamp: float, p: float, s: float, d: float, q: float):
+    def __init__(self, timestamp: float, p: float, s: float, q: float,u: float,i: float):
         '''
         A measurement with real-, apparent-, distortion- and reactive power\n
         :param float timestamp: The timestamp of the measurement\n
@@ -11,5 +11,6 @@ class Measurement(object):
         self.timestamp = timestamp
         self.p = p
         self.s = s
-        self.d = d
         self.q = q
+        self.u = u
+        self.i = i

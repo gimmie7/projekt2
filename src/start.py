@@ -42,8 +42,8 @@ def write_measurement():
     global timer
     measurement = em340.read_phase1()
     csvhelper.writeMeasurement(filename_out, measurement,timer)
-    outputMsg = ('{0}: P={1}W, S={2}VA, D={3}VAR, Q={4}VAR'
-    .format(timer, measurement.p, measurement.s, measurement.d, measurement.q))
+    outputMsg = ('{0}: P={1}W, S={2}VA, Q={3}VAR,U={4}V,I={5}A'
+    .format(timer, measurement.p, measurement.s, measurement.q, measurement.u, measurement.i))
     timer = timer + 1
     print(outputMsg)
 
