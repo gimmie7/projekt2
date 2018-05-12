@@ -2,6 +2,7 @@ import argparse
 import csv
 import statistics
 
+
 # Settings and default values
 device_name = 'Toaster'
 filename_in = 'samples.csv'
