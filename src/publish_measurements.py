@@ -12,7 +12,7 @@ interval = 15 # in seconds
 siot_center_url = 'siot.net'
 siot_center_port = 1883
 parser = argparse.ArgumentParser()
-parser.add_argument("--p", help="serial port where your modbus device is plugged in, e.g. COM4")
+parser.add_argument("--p", help="serial port where your modbus device is plugged in, e.g. COM4 on Windows or /dev/ttyUSB0 on Linux")
 parser.add_argument("--i", help="interval in seconds for publishing data to siot center", type=float)
 args = parser.parse_args()
 
