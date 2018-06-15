@@ -55,6 +55,35 @@ Diejenige Kombination mit der kleinsten Differenz zu den effektiven Messdaten wi
 -Ergebnisse (genauigkeit was wurde erkannt, was gibt es für Probleme mit dem Ansatz?
 -Tabellarische Auflistung der erkannten bzw. nicht erkannten Geräten
 
+Ergebnisse Kombinatorik bei sieben Geräten:
+\begin{table}[h]
+\begin{center}
+	\begin{tabular}{ | p{2cm} | p{2cm} | p{2cm} | p{2cm} | }
+	\hline
+	\textbf{Anz. Geräte pro Kombi.} & 
+	\textbf{Anz. getestete Kombi.} & 
+	\textbf{Anz. mögliche Kombi.} & 
+	\textbf{Erkennungs-rate} \\ 
+	\hline
+	1 & 7 & 7 & x \% \\ \hline
+	2 & x & 21 & x \% \\ \hline
+	3 & x & 35 & x \% \\ \hline
+	4 & x & 35 & x \% \\ \hline
+	5 & x & 21 & x \% \\ \hline
+	6 & x & 7 & x \% \\ \hline
+	7 & x & 1 & x \% \\ \hline
+	\textbf{Total} & \textbf{x} & \textbf{127} & \textbf{x \%} \\ \hline
+	\end{tabular}
+\end{center}
+\caption{Ergebnisse Kombinatorik}
+\label{table:ergebnisseKombinatorik}
+\end{table}
+
+Die Erkennungsrate bei sieben Geräten ist mit X \% relativ hoch.
+Die nicht erkannten Kombinationen führen wir darauf zurück, dass der einzeln gemessene Verbrauch eines Gerätes nicht zwingend gleich sein muss wie der Verbrauch, den das Gerät in Kombination mit anderen Geräten aufweist. Weiter fallen nicht alle Parameter gleich fest ins Gewicht. Der Stromverbrauch mit 2A verglichen mit der Wirkleistung von 1000W fällt somit praktisch nicht mehr ins Gewicht, obwohl er vielleicht gerade entscheidend sein könnte.
+\par
+Das wohl grösste Problem beim Ansatz mittels Kombinatorik ist die Tatsache, dass die Anzahl an Kombinationen mit zunehmender Anzahl an Geräten bald einmal explodiert. Sind es bei sieben Geräten noch überschaubare 127 Gerätekombinationen, so sind es bei 20 Geräten bereits 1'048'575 Kombinationen. All diese Kombinationen in Echtzeit durchzurechnen dürfte schon schwer werden, und ein durchschnittlicher Haushalt hat in der Regel weit mehr als 20 Geräte im Einsatz.
+
 \chapter{Ansatz Machine Learning}
 \label{sec:teil1_kombinatorik}
 -Wie würde dieser Ansatz funktionieren? beschreiben. NN und ML?
