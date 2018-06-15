@@ -1,0 +1,53 @@
+# LaTeX
+*.acn
+*.acr
+*.alg
+*.aux
+*.bak
+*.bbl
+*.blg
+*.bmt
+*.brf
+*.dvi
+*.fdb_latexmk
+*.glg
+*.glo
+*.gls
+*.idx
+*.ilg
+*.ind
+*.ist
+*.lbl
+*.lof
+*.log
+*.lot
+*.maf
+*.mpx
+*.mtc
+*.mtc0
+*.nav
+*.nlo
+*.out
+*.pdfsync
+*.ps
+*.snm
+*.synctex.gz
+*.toc
+*.tps
+*.vrb
+*.xdy
+*.tdo
+
+# TeXnicCenter
+*.glg
+*.glo
+*.gls
+*.ist
+!mkidx.ist
+
+# Compiled
+*.pdf
+*.ps
+
+# Windows
+Thumbs.db*

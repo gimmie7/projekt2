@@ -1,0 +1,23 @@
+\chapter{Source Code}
+\label{chap:teil3_sourcecode}
+
+
+\section{Direkte Eingabe des Source Code}
+
+Im Listing \nameref{lst:teil3_c_code_beispiel} wird der C-Code in das Tex-File geschrieben.
+
+\begin{lstlisting}[style=CCode, label=lst:teil3_c_code_beispiel, caption=C-Code Beispiel]
+int main(int argc, void *argv) {
+	boot();
+	LED = 0xFF;
+	shutdown();
+	return 1;
+}
+\end{lstlisting}
+
+
+\section{Einbinden des Source Code}
+
+Im Listing \ref{lst:teil3_java_code_beispiel} wird ein Java-File direkt eingebunden.
+
+\lstinputlisting[style=JavaCode, label=lst:teil3_java_code_beispiel, caption=Java-Code Beispiel]{SourceCode/JavaBeispiel.java}
