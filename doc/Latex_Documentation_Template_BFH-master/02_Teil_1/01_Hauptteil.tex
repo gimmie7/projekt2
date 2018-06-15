@@ -36,8 +36,19 @@ TODO: 3 Beispielgrafiken (Wasserkocher und tbd)
 
 \chapter{Disaggregation: Ansatz mittels Kombinatorik}
 \label{sec:teil1_kombinatorik}
--Algorthmus beschreiben (Inputs, Berechnungen) ev. Codebeispiele (eher mathematisch beschreiben)
+Beim Ansatz mittels Kombinatorik werden alle möglichen Kombinationen aus den Geräten bzw. deren Signaturen gebildet. Mathematisch ausgedrückt entspricht dies einer Kombination ohne Wiederholung und ohne fixe Anzahl Elemente. Dies führt zu der folgenden Formel:
+$$\sum_{k=1}^{n} \binom{n}{k} $$
 
+n entspricht der Anzahl Elemente aus der Auswahlmenge, also der Anzahl Gerätesignaturen, und k entspricht der Anzahl Elemente, aus der die Kombination besteht. Die kleinstmögliche Kombination an Gerätesignaturen ist somit 1 und die grösstmögliche ist n.
+\par
+Bei beispielsweise vier unterschiedlichen Gerätesignaturen ergibt dies die folgende Anzahl an möglichen Kombinationen:
+$$\sum_{k=1}^{n=4} \binom{n}{k} = 15$$
+
+Der Algorithmus zum Herausfinden welche Geräte zu einem bestimmten Zeitpunkt X am Stromzähler angeschlossen sind und Strom verbrauchen, funktioniert folgendermassen: aus den gemessenen Zählerdaten zum Zeitpunkt X wird zu jeder Kombination der Gerätesignaturen die Differenz zwischen Wirkleistung P, Scheinleistung S, Blindleistung Q und Stromverbrauch I berechnet und summiert. Dies entspricht dann der Differenz zwischen einer Kombination und den effektiv gemessenen Messdaten.
+
+\[Differenz = |P_t - P_k| + |S_t - S_k| + |Q_t - Q_k| + |I_t - I_k|\]
+
+Diejenige Kombination mit der kleinsten Differenz zu den effektiven Messdaten wird als Sieger auserkoren.
 
 \chapter{Ergebnisse}
 \label{sec:teil1_kombinatorik}
