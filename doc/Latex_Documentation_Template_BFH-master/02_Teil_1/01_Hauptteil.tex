@@ -3,7 +3,6 @@
 
 Das System besteht aus einem Smart Meter (EM340) und einem Gateway, auf welchem die Software zur Verbrauchsanalyse installiert ist. Die Geräte sind alle an der Phase L1 des Energiezählers angeschlossen. Prinzipiell ist der hier verwendete Energiezähler  zwar so konzipiert, dass er auf drei verschiedenen Phasen Messungen durchführen könnte, in diesem Projekt wurde aber auschliesslich die Phase L1 genutzt.
 
-TODO: Grafik SIOT ergänzen 
 
 \begin{figure}[H]
 	\centering
@@ -16,9 +15,36 @@ Als Gateway dient hier ein Raspberry Pi, auf welchem das in Python geschriebene 
 
 \chapter{Erstellen von Signaturen der Verbraucher}
 \label{sec:teil1_uebersicht}
-Aufgrund der physikalischen Gegebenheiten beeinflusst jedes Haushaltsgerät Strom und Spannung auf unterschiedliche weise. Genauer gesagt unterscheidet man zwischen ohmschen-, kapazitiven- und induktiven Verbrauchern. Ohmsche Verbraucher bestehen aus einem oder mehreren Widerständen, d.h. elektrischen Komponenten, die im wesentlichen Hitze oder Licht erzeugen. Beispiele dafür sind der Ofen, Glühbirnen oder Bügeleisen. Beim rein ?ohmschen? Verbraucher (dem ohne induktiven oder kapazitiven Anteil) sind Spannung und Strom stets ?in Phase?, d.h. es gibt keine Phasenverschiebung und somit keinen Blindleistungsanteil, was gleichzeitig auch bedeutet, dass die Wirkleistung gleich der Scheinleistung entspricht. Induktive Verbraucher sind im wesentlichen elektromagnetische Verbraucher, d.h. elektrische Komponenten, die Elektromagnetismus erzeugen. Diese Geräte benötigen beim Anlauf unter Umständen ein vielfaches an Anlaufstrom. Beispiele dafür sind Pumpen oder auch Ventilatoren. Bei rein induktiven Komponenten eilt die Spannung dem Strom voraus, wodurch sich eine Phasenverschiebung von 90 Grad ergibt. D.h. hier gibt es einen Blindleistungsanteil und somit ist die Wirkleistung ungleich der Scheinleistung. Kapazitive Verbraucher verhalten sich ähnlich wie induktive Verbraucher, mit dem unterschied, dass hier keine Magnetfelder aufgebaut werden, sondern elektrische Felder. Bei kapazitiven Lasten eilt der Strom der Spannung voraus, wobei auch hier wieder eine Phasenverschiebung von 90 Grad entsteht. D.h. also, dass auch kapazitive Lasten einen Blindleistungsanteil besitzen und die Wirkleistung nicht der Scheinleistung entspricht. Allerdings sind rein ohmsche, kapazitive und induktive Verbraucher eher selten und Misch-Verbraucher die Regel. D.h. also dass jeder Verbraucher in unterschiedlicher Weise Wirk-, Blin-, und Scheinleistung beeinflusst. Somit könnten zwei Verbraucher mit gleicher Wirkleistung trotzdem unterschieden werden aufgrund unterschiedlicher Blindleistungsanteilen. 
+Aufgrund der physikalischen Gegebenheiten beeinflusst jedes Haushaltsgerät Strom und Spannung auf unterschiedliche weise. Genauer gesagt unterscheidet man zwischen ohmschen-, kapazitiven- und induktiven Verbrauchern. Ohmsche Verbraucher bestehen aus einem oder mehreren Widerständen, d.h. elektrischen Komponenten, die im wesentlichen Hitze oder Licht erzeugen. Beispiele dafür sind der Ofen, Glühbirnen oder Bügeleisen. Beim rein "`ohmschen"' Verbraucher (dem ohne induktiven oder kapazitiven Anteil) sind Spannung und Strom stets "`in Phase"', d.h. es gibt keine Phasenverschiebung und somit keinen Blindleistungsanteil, was gleichzeitig auch bedeutet, dass die Wirkleistung gleich der Scheinleistung entspricht.
+ 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.3\textwidth]{Bilder/wirk.png} %70% der Textbreite
+	\caption{Spannung-/Stromverlauf ohmsche Widerstände}
+	\label{fig:teil1_pestle}
+\end{figure}
 
-TODO: Grafiken induktiv, kapazitiv, ohmsche aus Wiki
+Induktive Verbraucher sind im wesentlichen elektromagnetische Verbraucher, d.h. elektrische Komponenten, die Elektromagnetismus erzeugen. Diese Geräte benötigen beim Anlauf unter Umständen ein vielfaches an Anlaufstrom. Beispiele dafür sind Pumpen oder auch Ventilatoren. Bei rein induktiven Komponenten eilt die Spannung dem Strom voraus, wodurch sich eine Phasenverschiebung von 90 Grad ergibt. D.h. hier gibt es einen Blindleistungsanteil und somit ist die Wirkleistung ungleich der Scheinleistung.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.3\textwidth]{Bilder/induktiv.png} %70% der Textbreite
+	\caption{Spannung-/Stromverlauf induktive Widerstände}
+	\label{fig:teil1_pestle}
+\end{figure}
+
+Kapazitive Verbraucher verhalten sich ähnlich wie induktive Verbraucher, mit dem unterschied, dass hier keine Magnetfelder aufgebaut werden, sondern elektrische Felder. Bei kapazitiven Lasten eilt der Strom der Spannung voraus, wobei auch hier wieder eine Phasenverschiebung von 90 Grad entsteht. D.h. also, dass auch kapazitive Lasten einen Blindleistungsanteil besitzen und die Wirkleistung nicht der Scheinleistung entspricht. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.3\textwidth]{Bilder/kapazitiv.png} %70% der Textbreite
+	\caption{Spannung-/Stromverlauf kapazitive Widerstände}
+	\label{fig:teil1_pestle}
+\end{figure}
+
+
+Allerdings sind rein ohmsche, kapazitive und induktive Verbraucher eher selten und Misch-Verbraucher die Regel. D.h. also dass jeder Verbraucher in unterschiedlicher Weise Wirk-, Blin-, und Scheinleistung beeinflusst. Somit könnten zwei Verbraucher mit gleicher Wirkleistung trotzdem unterschieden werden aufgrund unterschiedlicher Blindleistungsanteilen. 
+
+
 
 Um für jedes Haushaltsgerät eine Signatur erstellen zu können, werden die Geräte zu Beginn jeweils einzeln an das Smartmeter angeschlossen und die jeweiligen Register über einen Zeitraum von 30 Sekunden ausgelesen. Die so gewonnenen Daten werden anschliessend in einer Datenbank abgespeichert und einem Gerät eindeutig zugewiesen. Diese Signatur wird dann schlussendlich verwendet um den Gesamtstromverbrauch auf die einzelnen Verbraucher aufschlüsseln zu können. Für diess Projekt 2 Arbeit kamen folgende Haushaltsgeräte zum Einsatz: Haarföhn, Heizlüfter, Ventilator, Bügeleisen, Toaster, Wasserkocher und Stabmixer. Die erstellten Signaturen werden auf folgenden Abbildungen illustriert. 
 
