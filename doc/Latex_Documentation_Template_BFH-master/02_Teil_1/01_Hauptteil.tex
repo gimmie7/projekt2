@@ -36,19 +36,43 @@ TODO: 3 Beispielgrafiken (Wasserkocher und tbd)
 
 \chapter{Disaggregation: Ansatz mittels Kombinatorik}
 \label{sec:teil1_kombinatorik}
-Beim Ansatz mittels Kombinatorik werden alle möglichen Kombinationen aus den Geräten bzw. deren Signaturen gebildet. Mathematisch ausgedrückt entspricht dies einer Kombination ohne Wiederholung und ohne fixe Anzahl Elemente. Dies führt zu der folgenden Formel:
+Die Grundidee beim Ansatz mittels Kombinatorik ist einfach: jedes Gerät hat bestimmte Eigenschaften. So wird beispielsweise die Wirk-, Schein- und Blindleistung oder der Stromverbrauch eines Gerätes immer mehr oder weniger gleich gross sein (verschiedene Zustände eines Gerätes, bspw. mehrere Leistungsstufen, werden hier nicht berücksichtigt). Dadurch kann von jedem Gerät eine Signatur erstellt werden. Anhand solcher Gerätesignaturen sollte es dann möglich sein, den gemessenen Totalverbrauch eindeutig einer Gerätesignatur bzw. einer Kombination von mehreren Gerätesignaturen zuzuweisen.
+\par
+In einem ersten Schritt wird also für jedes einzelne Gerät eine Signatur mit den folgenden Werten erstellt:
+\begin{itemize}
+\item Name des Verbrauchers
+\item Wirkleistung P in W
+\item Scheinleistung S in VA
+\item Blindleistung Q in var
+\item Stromverbrauch I in A
+\end{itemize}
+\par
+In einem zweiten Schritt werden dann alle möglichen Kombinationen aus den Geräten bzw. deren Signaturen gebildet. Mathematisch ausgedrückt entspricht dies einer Kombination ohne Wiederholung und ohne fixe Anzahl Elemente. Dies führt zu der folgenden Formel:
 $$\sum_{k=1}^{n} \binom{n}{k} $$
 
 n entspricht der Anzahl Elemente aus der Auswahlmenge, also der Anzahl Gerätesignaturen, und k entspricht der Anzahl Elemente, aus der die Kombination besteht. Die kleinstmögliche Kombination an Gerätesignaturen ist somit 1 und die grösstmögliche ist n.
 \par
 Bei beispielsweise vier unterschiedlichen Gerätesignaturen ergibt dies die folgende Anzahl an möglichen Kombinationen:
 $$\sum_{k=1}^{n=4} \binom{n}{k} = 15$$
+\par
+Im dritten und letzten Schritt geht es dann darum, mittels geeignetem Algorithmus den gemessenen Totalverbrauch einer dieser Kombinationen aus Gerätesignaturen zuzuordnen.
 
-Der Algorithmus zum Herausfinden welche Geräte zu einem bestimmten Zeitpunkt X am Stromzähler angeschlossen sind und Strom verbrauchen, funktioniert folgendermassen: aus den gemessenen Zählerdaten zum Zeitpunkt X wird zu jeder Kombination der Gerätesignaturen die Differenz zwischen Wirkleistung P, Scheinleistung S, Blindleistung Q und Stromverbrauch I berechnet und summiert. Dies entspricht dann der Differenz zwischen einer Kombination und den effektiv gemessenen Messdaten.
+\section{Ansatz 1}
+Bei diesem Ansatz wird ein Algorithmus verwendet, welcher aus den gemessenen Zählerdaten zum Zeitpunkt X zu jeder Kombination der Gerätesignaturen die Differenz zwischen Wirkleistung P, Scheinleistung S, Blindleistung Q und Stromverbrauch I berechnet und summiert. Dies entspricht dann der Differenz zwischen einer Kombination und den effektiv gemessenen Messdaten.
 
 \[Differenz = |P_t - P_k| + |S_t - S_k| + |Q_t - Q_k| + |I_t - I_k|\]
 
-Diejenige Kombination mit der kleinsten Differenz zu den effektiven Messdaten wird als Sieger auserkoren.
+Diejenige Kombination mit der kleinsten Differenz zu den effektiven Messdaten wird als die wahrscheinlichste Kombination angesehen und als Ergebnis zurückgegeben.
+
+\section{Ansatz 2}
+Im Unterschied zum ersten Ansatz werden hier alle Parameter einer Signatur einzeln berücksichtigt. Und zwar wird zu jedem Parameter (P, S, Q, I) die Differenz zwischen dem gemessenen Totalverbrauch und einer der Kombination berechnet.
+
+\[Differenz_P = |P_t - P_k| \]
+\[Differenz_S = |S_t - S_k| \]
+\[Differenz_Q = |Q_t - Q_k| \]
+\[Differenz_I = |I_t - I_k| \]
+
+Am Ende wird diejenige Kombination als am Wahrscheinlichsten angesehen und zurückgegeben, welche am häufigsten die kleinste Differenz aufweist.
 
 \chapter{Ergebnisse}
 \label{sec:teil1_kombinatorik}
