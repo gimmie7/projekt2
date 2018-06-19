@@ -15,7 +15,7 @@ Als Gateway dient hier ein Raspberry Pi, auf welchem das in Python geschriebene 
 
 \chapter{Erstellen von Signaturen der Verbraucher}
 \label{sec:teil1_uebersicht}
-Aufgrund der physikalischen Gegebenheiten beeinflusst jedes Haushaltsgerät Strom und Spannung auf unterschiedliche weise. Genauer gesagt unterscheidet man zwischen ohmschen-, kapazitiven- und induktiven Verbrauchern. Ohmsche Verbraucher bestehen aus einem oder mehreren Widerständen, d.h. elektrischen Komponenten, die im wesentlichen Hitze oder Licht erzeugen. Beispiele dafür sind der Ofen, Glühbirnen oder Bügeleisen. Beim rein "`ohmschen"' Verbraucher (dem ohne induktiven oder kapazitiven Anteil) sind Spannung und Strom stets "`in Phase"', d.h. es gibt keine Phasenverschiebung und somit keinen Blindleistungsanteil, was gleichzeitig auch bedeutet, dass die Wirkleistung gleich der Scheinleistung entspricht.
+Aufgrund der physikalischen Gegebenheiten beeinflusst jedes Haushaltsgerät Strom und Spannung auf unterschiedliche weise. Genauer gesagt unterscheidet man zwischen ohmschen-, kapazitiven- und induktiven Verbrauchern. Ohmsche Verbraucher bestehen aus einem oder mehreren Widerständen, d.h. elektrischen Komponenten, die im wesentlichen Hitze oder Licht erzeugen. Beispiele dafür sind der Ofen oder auch Glühbirnen. Beim rein "`ohmschen"' Verbraucher (dem ohne induktiven oder kapazitiven Anteil) sind Spannung und Strom stets "`in Phase"', d.h. es gibt keine Phasenverschiebung und somit keinen Blindleistungsanteil, was gleichzeitig auch bedeutet, dass die Wirkleistung gleich der Scheinleistung entspricht.
  
 \begin{figure}[H]
 	\centering
@@ -46,17 +46,21 @@ Allerdings sind rein ohmsche, kapazitive und induktive Verbraucher eher selten u
 
 
 
-Um für jedes Haushaltsgerät eine Signatur erstellen zu können, werden die Geräte zu Beginn jeweils einzeln an das Smartmeter angeschlossen und die jeweiligen Register über einen Zeitraum von 30 Sekunden ausgelesen. Die so gewonnenen Daten werden anschliessend in einer Datenbank abgespeichert und einem Gerät eindeutig zugewiesen. Diese Signatur wird dann schlussendlich verwendet um den Gesamtstromverbrauch auf die einzelnen Verbraucher aufschlüsseln zu können. Für diess Projekt 2 Arbeit kamen folgende Haushaltsgeräte zum Einsatz: Haarföhn, Heizlüfter, Ventilator, Bügeleisen, Toaster, Wasserkocher und Stabmixer. Die erstellten Signaturen werden auf folgenden Abbildungen illustriert. 
+Um für jedes Haushaltsgerät eine Signatur erstellen zu können, werden die Geräte zu Beginn jeweils einzeln an das Smartmeter angeschlossen und die jeweiligen Register über einen Zeitraum von 30 Sekunden ausgelesen. Die so gewonnenen Daten werden anschliessend in einer Datenbank abgespeichert und einem Gerät eindeutig zugewiesen. Diese Signatur wird dann schlussendlich verwendet um den Gesamtstromverbrauch auf die einzelnen Verbraucher aufschlüsseln zu können. Für diess Projekt 2 Arbeit kamen folgende Haushaltsgeräte zum Einsatz: Haarföhn, Heizlüfter, Ventilator, Bügeleisen, Toaster, Wasserkocher und Stabmixer. Die zwei nachfolgenden Abbildungen illustrieren zwei Beispielsignaturen.
 
-TODO: 3 Beispielgrafiken (Wasserkocher und tbd)
-\chapter{Einleitung}
-\label{chap:teil1_einleitung}\chapter{Einleitung}
-\label{chap:teil1_einleitung}
-
+Die Lampe ist ein rein ohmscher Verbraucher und weist somit keinen Blindleistungsanteil auf.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.5\textwidth]{Bilder/wasserkocher.png} %70% der Textbreite
-	\caption{Übersicht Gesamtsystem}
+	\caption{Signatur Lampe}
+	\label{fig:teil1_pestle}
+\end{figure}
+
+Der Heizlüfter dagegen ist eine induktive Last und verbraucht eine durchschnittliche Wirkleistung von 1180 Watt. Wie man der Abbildung entnehmen kann besteht hier auch ein gewisser Blindleistungsanteil.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth]{Bilder/Heizluefter.png} %70% der Textbreite
+	\caption{Signatur Heizlüfter}
 	\label{fig:teil1_pestle}
 \end{figure}
 
@@ -78,8 +82,8 @@ Diejenige Kombination mit der kleinsten Differenz zu den effektiven Messdaten wi
 
 \chapter{Ergebnisse}
 \label{sec:teil1_kombinatorik}
--Ergebnisse (genauigkeit was wurde erkannt, was gibt es für Probleme mit dem Ansatz?
--Tabellarische Auflistung der erkannten bzw. nicht erkannten Geräten
+Der Ansatz mittels Kombinatorik funktioniert erstaunlich gut, stösst aber auch bald mal an seine Grenzen. Wurden jeweils nur die einzelnen Geräte angeschlossen, so wurden diese alle einwandfrei identifiziert. Bei den zweier Kombinationen wurden dagegen nur noch 80 \% erkannt. Bei den dreier Kombinationen traten dann schon die ersten Probleme auf. Da nur eine Phase verwendet wurde, war es kaum möglich Geräte mit hohem Stromverbrauch in Kombination zu testen, da es immer die Sicherungen rausgehauen hat. Ausserdem ist aufgefallen, dass wenn Geräte in Kombination einen ähnlichen Verbrauch aufwiesen wieein einzelnes Gerät mit einem etwas höherem Verbrauch, so wurden die Kombnationen teilweise vertauscht. 
+
 
 Ergebnisse Kombinatorik bei sieben Geräten:
 \begin{table}[h]
