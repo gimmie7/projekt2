@@ -1,7 +1,7 @@
 \chapter{Übersicht Gesamtsystem}
 \label{sec:teil1_uebersicht}
 
-Das System besteht aus einem Smart Meter (EM340) und einem Gateway, auf welchem die Software zur Verbrauchsanalyse installiert ist. Die Geräte sind alle an der Phase L1 des Energiezählers angeschlossen. Prinzipiell ist der hier verwendete Energiezähler  zwar so konzipiert, dass er auf drei verschiedenen Phasen Messungen durchführen könnte, in diesem Projekt wurde aber auschliesslich die Phase L1 genutzt.
+Das System besteht aus einem Smart Meter (EM340) und einem Gateway, auf welchem die Software zur Verbrauchsanalyse installiert ist. Die Geräte sind alle an der Phase L1 des Energiezählers angeschlossen. Prinzipiell ist der hier verwendete Energiezähler  zwar so konzipiert, dass er auf drei verschiedenen Phasen Messungen durchführen könnte, in diesem Projekt wurde aber einfachheitshalber nur die Phase L1 genutzt.
 
 
 \begin{figure}[H]
@@ -20,7 +20,7 @@ Aufgrund der physikalischen Gegebenheiten beeinflusst jedes Haushaltsgerät Strom
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.3\textwidth]{Bilder/wirk.png} %70% der Textbreite
-	\caption{Spannung-/Stromverlauf ohmsche Widerstände}
+	\caption{Spannung-/Stromverlauf ohmsche Widerstände, Quelle: www.lernhelfer.de}
 	\label{fig:teil1_pestle}
 \end{figure}
 
@@ -28,35 +28,62 @@ Induktive Verbraucher sind im wesentlichen elektromagnetische Verbraucher, d.h. 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.3\textwidth]{Bilder/induktiv.png} %70% der Textbreite
-	\caption{Spannung-/Stromverlauf induktive Widerstände}
+	\caption{Spannung-/Stromverlauf induktive Widerstände, Quelle: www.lernhelfer.de}
 	\label{fig:teil1_pestle}
 \end{figure}
 
-Kapazitive Verbraucher verhalten sich ähnlich wie induktive Verbraucher, mit dem unterschied, dass hier keine Magnetfelder aufgebaut werden, sondern elektrische Felder. Bei kapazitiven Lasten eilt der Strom der Spannung voraus, wobei auch hier wieder eine Phasenverschiebung von 90 Grad entsteht. D.h. also, dass auch kapazitive Lasten einen Blindleistungsanteil besitzen und die Wirkleistung nicht der Scheinleistung entspricht. 
+Kapazitive Verbraucher verhalten sich ähnlich wie induktive Verbraucher, mit dem Unterschied, dass hier keine Magnetfelder aufgebaut werden, sondern elektrische Felder. Bei kapazitiven Lasten eilt der Strom der Spannung voraus, wobei auch hier wieder eine Phasenverschiebung von 90 Grad entsteht. D.h. also, dass auch kapazitive Lasten einen Blindleistungsanteil besitzen und die Wirkleistung nicht der Scheinleistung entspricht. 
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.3\textwidth]{Bilder/kapazitiv.png} %70% der Textbreite
-	\caption{Spannung-/Stromverlauf kapazitive Widerstände}
+	\caption{Spannung-/Stromverlauf kapazitive Widerstände, Quelle: www.lernhelfer.de}
 	\label{fig:teil1_pestle}
 \end{figure}
 
 
-Allerdings sind rein ohmsche, kapazitive und induktive Verbraucher eher selten und Misch-Verbraucher die Regel. D.h. also dass jeder Verbraucher in unterschiedlicher Weise Wirk-, Blin-, und Scheinleistung beeinflusst. Somit könnten zwei Verbraucher mit gleicher Wirkleistung trotzdem unterschieden werden aufgrund unterschiedlicher Blindleistungsanteilen. 
+Allerdings sind rein ohmsche, kapazitive und induktive Verbraucher eher selten und Misch-Verbraucher die Regel. D.h. also dass jeder Verbraucher in unterschiedlicher Weise Wirk-, Blind-, und Scheinleistung beeinflusst. Somit könnten zwei Verbraucher mit gleicher Wirkleistung trotzdem unterschieden werden aufgrund unterschiedlicher Blindleistungsanteilen. 
 
 
 
-Um für jedes Haushaltsgerät eine Signatur erstellen zu können, werden die Geräte zu Beginn jeweils einzeln an das Smartmeter angeschlossen und die jeweiligen Register über einen Zeitraum von 30 Sekunden ausgelesen. Die so gewonnenen Daten werden anschliessend in einer Datenbank abgespeichert und einem Gerät eindeutig zugewiesen. Diese Signatur wird dann schlussendlich verwendet um den Gesamtstromverbrauch auf die einzelnen Verbraucher aufschlüsseln zu können. Für diess Projekt 2 Arbeit kamen folgende Haushaltsgeräte zum Einsatz: Haarföhn, Heizlüfter, Ventilator, Bügeleisen, Toaster, Wasserkocher und Stabmixer. Die zwei nachfolgenden Abbildungen illustrieren zwei Beispielsignaturen.
+Um für jedes Haushaltsgerät eine Signatur erstellen zu können, werden die Geräte zu Beginn jeweils einzeln an das Smartmeter angeschlossen und die jeweiligen Register über einen Zeitraum von 30 Sekunden ausgelesen. Die so gewonnenen Daten werden anschliessend in einer Datenbank abgespeichert und einem Gerät eindeutig zugewiesen. Diese Signatur wird dann schlussendlich verwendet um den Gesamtstromverbrauch auf die einzelnen Verbraucher aufschlüsseln zu können. Für diese Projekt 2 Arbeit kamen folgende Haushaltsgeräte zum Einsatz: 
 
-Die Lampe ist ein rein ohmscher Verbraucher und weist somit keinen Blindleistungsanteil auf.
+\begin{table}[h]
+\begin{center}
+	\begin{tabular}{ |l|r| }
+	\hline
+	\textbf{Gerät} & 
+	\textbf{Angegebene Leistung [W]} 
+	 \\ 
+	\hline
+	Stabmixer & 220  \\ \hline
+	Toaster & 800  \\ \hline
+	Wasserkocher & 1850 - 2200  \\ \hline
+	Heizlüfter & 1200 \\ \hline
+	Haarföhn & 1800 - 2200 \\ \hline
+	Bügeleisen & 2300\\ \hline
+	
+
+	\end{tabular}
+\end{center}
+\caption{Geräte}
+\label{table:ergebnisseKombinatorik}
+\end{table}
+
+
+Die zwei nachfolgenden Abbildungen illustrieren zwei Beispielsignaturen.
+
+Der Haarföhn ist ein rein ohmscher Verbraucher und weist somit keinen Blindleistungsanteil auf. Die Wirk- und die Scheinleistung sind somit gleich hoch und überlagern sich in der Grafik.
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.5\textwidth]{Bilder/wasserkocher.png} %70% der Textbreite
-	\caption{Signatur Lampe}
+	\includegraphics[width=0.5\textwidth]{Bilder/foehn.png} %70% der Textbreite
+	\caption{Signatur Haarföhn}
 	\label{fig:teil1_pestle}
 \end{figure}
 
-Der Heizlüfter dagegen ist eine induktive Last und verbraucht eine durchschnittliche Wirkleistung von 1180 Watt. Wie man der Abbildung entnehmen kann besteht hier auch ein gewisser Blindleistungsanteil.
+\newpage
+
+Der Heizlüfter dagegen ist eine induktive Last. Wie man der Abbildung entnehmen kann besteht hier auch ein gewisser Blindleistungsanteil.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.5\textwidth]{Bilder/Heizluefter.png} %70% der Textbreite
@@ -64,7 +91,10 @@ Der Heizlüfter dagegen ist eine induktive Last und verbraucht eine durchschnittl
 	\label{fig:teil1_pestle}
 \end{figure}
 
-\chapter{Disaggregation: Ansatz mittels Kombinatorik}
+\chapter{Disaggregation: NILM Ansätze}
+\label{sec:teil1_ansaetze}
+
+\section{Ansatz Kombinatorik}
 \label{sec:teil1_kombinatorik}
 Beim Ansatz mittels Kombinatorik werden alle möglichen Kombinationen aus den Geräten bzw. deren Signaturen gebildet. Mathematisch ausgedrückt entspricht dies einer Kombination ohne Wiederholung und ohne fixe Anzahl Elemente. Dies führt zu der folgenden Formel:
 $$\sum_{k=1}^{n} \binom{n}{k} $$
@@ -80,39 +110,40 @@ Der Algorithmus zum Herausfinden welche Geräte zu einem bestimmten Zeitpunkt X a
 
 Diejenige Kombination mit der kleinsten Differenz zu den effektiven Messdaten wird als Sieger auserkoren.
 
+\section{Ansatz Eventbasiert }
+\label{sec:teil1_kombinatorik}
+Beim eventbasierten Ansatz werden kontinuierlich Messungen durchgeführt und auf Events reagiert. Die gemessenen Werte werden zwischengespeichert und bei der nächsten Messung wird die Differenz daraus gebildet. Ist die Differenz grösser als der Schwellwert von 25W Wirkleistung, wird dies als ein Event interpretiert. 
+
+\[Differenz = Messung zum Zeitpunkt t1 - Messung zum Zeitpunkt t2\]
+
+Falls diese Differenz positiv ist, entspricht dies einem ON-Event, d.h. Gerät wurde hinzugeschaltet. Falls sie negativ, entspricht dies einem OFF-Event, d.h. Gerät wurde abgeschaltet. Die so ermittelte Differenz wird nun mit allen Gerätesignaturen verglichen. Dasjenige Gerät, dessen Wert am nächsten bei dieser Differenz liegt, wird als das Eventauslösende Gerät identifiziert.
+
+TODO
+
+\[Differenz = |Gerät X - Differenz|\]
+
 \chapter{Ergebnisse}
 \label{sec:teil1_kombinatorik}
-Der Ansatz mittels Kombinatorik funktioniert erstaunlich gut, stösst aber auch bald mal an seine Grenzen. Wurden jeweils nur die einzelnen Geräte angeschlossen, so wurden diese alle einwandfrei identifiziert. Bei den zweier Kombinationen wurden dagegen nur noch 80 \% erkannt. Bei den dreier Kombinationen traten dann schon die ersten Probleme auf. Da nur eine Phase verwendet wurde, war es kaum möglich Geräte mit hohem Stromverbrauch in Kombination zu testen, da es immer die Sicherungen rausgehauen hat. Ausserdem ist aufgefallen, dass wenn Geräte in Kombination einen ähnlichen Verbrauch aufwiesen wieein einzelnes Gerät mit einem etwas höherem Verbrauch, so wurden die Kombnationen teilweise vertauscht. 
 
+\section{Ansatz Kobinatorik}
+Der Ansatz mittels Kombinatorik funktioniert nicht sehr gut und stösst bald mal an seine Grenzen. Werden jeweils nur die einzelnen Geräte angeschlossen, so werden diese noch alle einwandfrei identifiziert. Bei den Zweier-Kombinationen werden dagegen nur noch rund 80 \% erkannt. Bei den Dreier-Kombinationen treten dann schon die ersten grösseren Probleme auf. 
+\begin{itemize}
+\item Geräte mit hohem Verbrauch konnten nicht in Kombination getestet werden, da nur eine Phase verwendet wurde. Dies führte auf dieser Phase zu einer Überlast.
+\item Der gemessene Verbrauch eines Gerätes ist in Kombination mit anderen Geräten etwas niedriger als wenn das Gerät einzeln gemessen wird. Die Folge davon ist, dass andere Kombinationen teilweise näher am gemessenen Wert liegen als die eigentliche Kombination.
+\item Die Anzahl an Kombinationen steigt mit zunehmender Anzahl Verbrauchern enorm an. Sind es bei sieben Geräten noch überschaubare 127 Gerätekombinationen, so sind es bei 20 Geräten bereits 1'048'575 Kombinationen. Dies wirkt sich negativ auf die Performance aus.
+\end{itemize}
 
-Ergebnisse Kombinatorik bei sieben Geräten:
-\begin{table}[h]
-\begin{center}
-	\begin{tabular}{ | p{2cm} | p{2cm} | p{2cm} | p{2cm} | }
-	\hline
-	\textbf{Anz. Geräte pro Kombi.} & 
-	\textbf{Anz. getestete Kombi.} & 
-	\textbf{Anz. mögliche Kombi.} & 
-	\textbf{Erkennungs-rate} \\ 
-	\hline
-	1 & 7 & 7 & x \% \\ \hline
-	2 & x & 21 & x \% \\ \hline
-	3 & x & 35 & x \% \\ \hline
-	4 & x & 35 & x \% \\ \hline
-	5 & x & 21 & x \% \\ \hline
-	6 & x & 7 & x \% \\ \hline
-	7 & x & 1 & x \% \\ \hline
-	\textbf{Total} & \textbf{x} & \textbf{127} & \textbf{x \%} \\ \hline
-	\end{tabular}
-\end{center}
-\caption{Ergebnisse Kombinatorik}
-\label{table:ergebnisseKombinatorik}
-\end{table}
+TODO: Replace Geräte mit Verbraucher
 
-Die Erkennungsrate bei sieben Geräten ist mit X \% relativ hoch.
-Die nicht erkannten Kombinationen führen wir darauf zurück, dass der einzeln gemessene Verbrauch eines Gerätes nicht zwingend gleich sein muss wie der Verbrauch, den das Gerät in Kombination mit anderen Geräten aufweist. Weiter fallen nicht alle Parameter gleich fest ins Gewicht. Der Stromverbrauch mit 2A verglichen mit der Wirkleistung von 1000W fällt somit praktisch nicht mehr ins Gewicht, obwohl er vielleicht gerade entscheidend sein könnte.
-\par
-Das wohl grösste Problem beim Ansatz mittels Kombinatorik ist die Tatsache, dass die Anzahl an Kombinationen mit zunehmender Anzahl an Geräten bald einmal explodiert. Sind es bei sieben Geräten noch überschaubare 127 Gerätekombinationen, so sind es bei 20 Geräten bereits 1'048'575 Kombinationen. All diese Kombinationen in Echtzeit durchzurechnen dürfte schon schwer werden, und ein durchschnittlicher Haushalt hat in der Regel weit mehr als 20 Geräte im Einsatz.
+\section{Ansatz Eventbasiert}
+Der in dieser Arbeit verwendete eventbasierte Ansatz ist sehr einfach gehalten und funktioniert wohl deshalb auch nicht einwandfrei. Einzelne Verbraucher werden jeweils einwandfrei identifiziert.
+\begin{itemize}
+\item Verbraucher mit sehr geringem Verbrauch können nicht identifiziert werden aufgrund der kleinen Differenzen. Um diese zu erkennen, müsste der Schwellwert zum Auslösen des Events viel kleiner gewählt werden. Dies würde aber dazu führen, dass kleine Schwankungen auch als Events interpretiert würden.
+\item Multistatus-Verbraucher, d.h. Verbraucher mit mehreren Zuständen wie bspw. ein Staubsauger, können nicht erkannt werden, da jeder Zustandswechsel als Event interpretiert würde.
+\item Verbraucher mit sehr ähnlichem Verbrauch können nur schwer unterschieden werden.
+\end{itemize}
+
+Der eventbasierte Ansatz hat sicher mehr Potential als der kombinatorische Ansatz. Bei Hinzunahme weiterer Features und durch Anpassung des Schwellwertes kann dieser Ansatz noch optimiert werden. Durch Verwendung entsprechender Filter könnten zudem Schwankungen in den Messungen geglättet werden. Durch diese Optimierungen könnten somit weitaus bessere Ergebnisse erzielt werden.
 
 \chapter{Ansatz Machine Learning}
 \label{sec:teil1_kombinatorik}

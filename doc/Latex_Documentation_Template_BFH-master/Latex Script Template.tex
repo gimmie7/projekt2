@@ -219,13 +219,8 @@
 		\today
 	}
 	\fancyfoot[R]{\footnotesize \thepage}		% footer right part --> page number
-	\fancyhead[C]{\module}						% header right part --> module name
+	\fancyhead[L]{\module}						% header right part --> module name
 	\fancyhead[R]{\footnotesize \leftmark}		% footer left part -->	chapter
-	\fancyhead[L]{								% header left part --> BFH logo
-		\begin{textblock}{0}[0,0](29,9)
-			\includegraphics[scale=1.0]{Bilder/BFH_Logo/\logo}
-		\end{textblock}
-	}
 }
 
 \renewcommand{\chaptermark}[1]{\markboth{\thechapter.  #1}{}}
