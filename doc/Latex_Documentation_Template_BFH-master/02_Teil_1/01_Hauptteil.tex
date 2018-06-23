@@ -147,16 +147,32 @@ Der eventbasierte Ansatz hat sicher mehr Potential als der kombinatorische Ansat
 
 \chapter{Ansatz Machine Learning}
 \label{sec:teil1_kombinatorik}
-Der Ansatz mittels Kombinatorik weist, wie schon im vorherigen Kapitel erwähnt, noch einige Probleme auf und ist für eine präzise Disaggregation somit nicht geeignet. Es wird ein Modell benötigt, welches robust ist, auch wenn die Anzahl der Geräte erhöht wird. Ausserdem sollten auch Multistatusgeräte klassifiziert werden können, wie beispielsweise ein Staubsauger oder eine Waschmaschine. Und auch Geräte mit ähnlichem Verbrauch sollte das Modell erkennen können.
+Die zuvor diskutierten Ansätze weisen, wie schon im vorherigen Kapitel erwähnt, noch einige Probleme auf und sind für eine präzise Disaggregation somit nur bedingt geeignet. Es wird ein Modell benötigt, welches robust ist, auch wenn die Anzahl der Geräte erhöht wird. Ausserdem sollten auch Multistatusgeräte klassifiziert werden können, wie beispielsweise ein Staubsauger oder eine Waschmaschine. Und auch Geräte mit ähnlichem Verbrauch sollte das Modell erkennen können. Neuronale Netze sind ein vielversprechender Ansatz dafür. Um NILM mittels Neuronalen Netzen abzubilden, werden allerdings sehr viele Daten benötigt. Trainsingsdatensätze zu diesem Thema gibt es aber schon bereits, einer davon ist REDD. Dieser ist öffentlich verfügbar mit Daten über den Verbrauch von 10 Häusern in der USA, wo das System zweiphasig ist. Es enthält gesampelte Daten in niedriger Frequenz (1 Hz) für das ganze Haus und einzelne Geräte.Im Bereich Machine Learning und Neuronalen Netzen unterscheidet man zwischen drei verschiedenen Lernmethoden:
+
+\textbf{Supervised Learning:}  
+Beim überwachten Lernen wird das Modell nicht nur mit dem aggregierten Verbrauch trainiert, sondern auch mit dem Verbrauch der einzelnen Geräte. Somit müssen Daten auf Geräteebene gesammelt werden, die dann als Trainingsdaten für das Modell verwendet werden.
+
+\textbf{Unsupervised Learning:} 
+Beim unüberwachtem Lernen wird das Modell nur mit dem aggregierten Verbrauch trainiert, was bedeutet, dass kein vorheriges Training mit gelabelten Daten erforderlich ist. Diese Methode wäre sehr wünschenswert.
+
+\textbf{Semi-Supervised Learning:} 
+Beim halb überwachten Lernen verwendet das Modell eine Kombination von sowohl gelabelten als auch ungelabelten Daten für das Training. Im Fall von NILM ist es wohl die am besten geeignete Methode.
+
+Das Neuronale Netz wird jeweils mit einem Trainingsdatensatz trainiert und dann auf Daten getestet, die das Netz noch nie zuvor gesehen hat.
 
 
 
 
 
--Wie würde dieser Ansatz funktionieren? beschreiben. NN und ML?
+
+
+
+
 
 \chapter{Schlusswort}
 \label{sec:teil1_kombinatorik}
+Die ganze Thematik rund um NILM ist sehr aktuell und hat viel Potential. 
+
 
 Fazit, Schwierigkeiten, Ausblick Thesis
 % Einträge im Verzeichnis erscheinen lassen ohne hier eine Referenz einzufügen
