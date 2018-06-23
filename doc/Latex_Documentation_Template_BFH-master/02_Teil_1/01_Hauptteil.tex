@@ -1,7 +1,7 @@
 \chapter{Übersicht Gesamtsystem}
 \label{sec:teil1_uebersicht}
 
-Das System besteht aus einem Smart Meter (EM340) und einem Gateway, auf welchem die Software zur Verbrauchsanalyse installiert ist. Die Geräte sind alle an der Phase L1 des Energiezählers angeschlossen. Prinzipiell ist der hier verwendete Energiezähler  zwar so konzipiert, dass er auf drei verschiedenen Phasen Messungen durchführen könnte, in diesem Projekt wurde aber einfachheitshalber nur die Phase L1 genutzt.
+Das System besteht aus einem Smart Meter (EM340) und einem Gateway, auf welchem die Software zur Verbrauchsanalyse installiert ist. Die Verbraucher sind alle an der Phase L1 des Energiezählers angeschlossen. Prinzipiell ist der hier verwendete Energiezähler zwar so konzipiert, dass er auf drei verschiedenen Phasen Messungen durchführen könnte, in diesem Projekt wurde aber einfachheitshalber nur die Phase L1 genutzt.
 
 
 \begin{figure}[H]
@@ -15,7 +15,7 @@ Als Gateway dient hier ein Raspberry Pi, auf welchem das in Python geschriebene 
 
 \chapter{Erstellen von Signaturen der Verbraucher}
 \label{sec:teil1_uebersicht}
-Aufgrund der physikalischen Gegebenheiten beeinflusst jedes Haushaltsgerät Strom und Spannung auf unterschiedliche weise. Genauer gesagt unterscheidet man zwischen ohmschen-, kapazitiven- und induktiven Verbrauchern. Ohmsche Verbraucher bestehen aus einem oder mehreren Widerständen, d.h. elektrischen Komponenten, die im wesentlichen Hitze oder Licht erzeugen. Beispiele dafür sind der Ofen oder auch Glühbirnen. Beim rein "`ohmschen"' Verbraucher (dem ohne induktiven oder kapazitiven Anteil) sind Spannung und Strom stets "`in Phase"', d.h. es gibt keine Phasenverschiebung und somit keinen Blindleistungsanteil, was gleichzeitig auch bedeutet, dass die Wirkleistung gleich der Scheinleistung entspricht.
+Aufgrund der physikalischen Gegebenheiten beeinflusst jeder Verbraucher Strom und Spannung auf unterschiedliche Art und Weise. Genauer gesagt unterscheidet man zwischen ohmschen-, kapazitiven- und induktiven Verbrauchern. Ohmsche Verbraucher bestehen aus einem oder mehreren Widerständen, d.h. elektrischen Komponenten, die im wesentlichen Hitze oder Licht erzeugen. Beispiele dafür sind der Ofen oder auch Glühbirnen. Beim rein "`ohmschen"' Verbraucher (dem ohne induktiven oder kapazitiven Anteil) sind Spannung und Strom stets "`in Phase"', d.h. es gibt keine Phasenverschiebung und somit keinen Blindleistungsanteil, was gleichzeitig auch bedeutet, dass die Wirkleistung gleich der Scheinleistung entspricht.
  
 \begin{figure}[H]
 	\centering
@@ -24,7 +24,7 @@ Aufgrund der physikalischen Gegebenheiten beeinflusst jedes Haushaltsgerät Strom
 	\label{fig:teil1_pestle}
 \end{figure}
 
-Induktive Verbraucher sind im wesentlichen elektromagnetische Verbraucher, d.h. elektrische Komponenten, die Elektromagnetismus erzeugen. Diese Geräte benötigen beim Anlauf unter Umständen ein vielfaches an Anlaufstrom. Beispiele dafür sind Pumpen oder auch Ventilatoren. Bei rein induktiven Komponenten eilt die Spannung dem Strom voraus, wodurch sich eine Phasenverschiebung von 90 Grad ergibt. D.h. hier gibt es einen Blindleistungsanteil und somit ist die Wirkleistung ungleich der Scheinleistung.
+Induktive Verbraucher sind im wesentlichen elektromagnetische Verbraucher, d.h. elektrische Komponenten, die Elektromagnetismus erzeugen. Sie benötigen beim Anlauf unter Umständen ein Vielfaches an Anlaufstrom. Beispiele dafür sind Pumpen oder auch Ventilatoren. Bei rein induktiven Komponenten eilt die Spannung dem Strom voraus, wodurch sich eine Phasenverschiebung von 90 Grad ergibt. D.h. hier gibt es einen Blindleistungsanteil und somit ist die Wirkleistung ungleich der Scheinleistung.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.3\textwidth]{Bilder/induktiv.png} %70% der Textbreite
@@ -46,13 +46,13 @@ Allerdings sind rein ohmsche, kapazitive und induktive Verbraucher eher selten u
 
 
 
-Um für jedes Haushaltsgerät eine Signatur erstellen zu können, werden die Geräte zu Beginn jeweils einzeln an das Smartmeter angeschlossen und die jeweiligen Register über einen Zeitraum von 30 Sekunden ausgelesen. Die so gewonnenen Daten werden anschliessend in einer Datenbank abgespeichert und einem Gerät eindeutig zugewiesen. Diese Signatur wird dann schlussendlich verwendet um den Gesamtstromverbrauch auf die einzelnen Verbraucher aufschlüsseln zu können. Für diese Projekt 2 Arbeit kamen folgende Haushaltsgeräte zum Einsatz: 
+Um für jeden Verbraucher eine Signatur erstellen zu können, werden sie zu Beginn jeweils einzeln an das Smartmeter angeschlossen und die jeweiligen Register über einen Zeitraum von 30 Sekunden ausgelesen. Die so gewonnenen Daten werden anschliessend in einer Datenbank abgespeichert und einem Verbraucher eindeutig zugewiesen. Diese Signatur wird dann schlussendlich verwendet um den Gesamtstromverbrauch auf die einzelnen Verbraucher aufschlüsseln zu können. Für diese Projekt 2 Arbeit kamen folgende Verbraucher zum Einsatz: 
 
 \begin{table}[h]
 \begin{center}
 	\begin{tabular}{ |l|r| }
 	\hline
-	\textbf{Gerät} & 
+	\textbf{Verbraucher} & 
 	\textbf{Angegebene Leistung [W]} 
 	 \\ 
 	\hline
@@ -66,7 +66,7 @@ Um für jedes Haushaltsgerät eine Signatur erstellen zu können, werden die Geräte
 
 	\end{tabular}
 \end{center}
-\caption{Geräte}
+\caption{Verbraucher}
 \label{table:ergebnisseKombinatorik}
 \end{table}
 
@@ -96,15 +96,15 @@ Der Heizlüfter dagegen ist eine induktive Last. Wie man der Abbildung entnehmen 
 
 \section{Ansatz Kombinatorik}
 \label{sec:teil1_kombinatorik}
-Beim Ansatz mittels Kombinatorik werden alle möglichen Kombinationen aus den Geräten bzw. deren Signaturen gebildet. Mathematisch ausgedrückt entspricht dies einer Kombination ohne Wiederholung und ohne fixe Anzahl Elemente. Dies führt zu der folgenden Formel:
+Beim Ansatz mittels Kombinatorik werden alle möglichen Kombinationen aus den Verbrauchern bzw. deren Signaturen gebildet. Mathematisch ausgedrückt entspricht dies einer Kombination ohne Wiederholung und ohne fixe Anzahl Elemente. Dies führt zu der folgenden Formel:
 $$\sum_{k=1}^{n} \binom{n}{k} $$
 
-n entspricht der Anzahl Elemente aus der Auswahlmenge, also der Anzahl Gerätesignaturen, und k entspricht der Anzahl Elemente, aus der die Kombination besteht. Die kleinstmögliche Kombination an Gerätesignaturen ist somit 1 und die grösstmögliche ist n.
+n entspricht der Anzahl Elemente aus der Auswahlmenge, also der Anzahl Signaturen, und k entspricht der Anzahl Elemente, aus der die Kombination besteht. Die kleinstmögliche Kombination an Signaturen ist somit 1 und die grösstmögliche ist n.
 \par
-Bei beispielsweise vier unterschiedlichen Gerätesignaturen ergibt dies die folgende Anzahl an möglichen Kombinationen:
+Bei beispielsweise vier unterschiedlichen Signaturen ergibt dies die folgende Anzahl an möglichen Kombinationen:
 $$\sum_{k=1}^{n=4} \binom{n}{k} = 15$$
 
-Der Algorithmus zum Herausfinden welche Geräte zu einem bestimmten Zeitpunkt X am Stromzähler angeschlossen sind und Strom verbrauchen, funktioniert folgendermassen: aus den gemessenen Zählerdaten zum Zeitpunkt X wird zu jeder Kombination der Gerätesignaturen die Differenz zwischen Wirkleistung P, Scheinleistung S, Blindleistung Q und Stromverbrauch I berechnet und summiert. Dies entspricht dann der Differenz zwischen einer Kombination und den effektiv gemessenen Messdaten.
+Der Algorithmus zum Herausfinden welche Verbraucher zu einem bestimmten Zeitpunkt X am Stromzähler angeschlossen sind und Strom verbrauchen, funktioniert folgendermassen: aus den gemessenen Zählerdaten zum Zeitpunkt X wird zu jeder Kombination der Signaturen die Differenz zwischen Wirkleistung P, Scheinleistung S, Blindleistung Q und Stromverbrauch I berechnet und summiert. Dies entspricht dann der Differenz zwischen einer Kombination und den effektiv gemessenen Messdaten.
 
 \[Differenz = |P_t - P_k| + |S_t - S_k| + |Q_t - Q_k| + |I_t - I_k|\]
 
@@ -116,24 +116,22 @@ Beim eventbasierten Ansatz werden kontinuierlich Messungen durchgeführt und auf 
 
 \[Differenz = Messung zum Zeitpunkt t1 - Messung zum Zeitpunkt t2\]
 
-Falls diese Differenz positiv ist, entspricht dies einem ON-Event, d.h. Gerät wurde hinzugeschaltet. Falls sie negativ, entspricht dies einem OFF-Event, d.h. Gerät wurde abgeschaltet. Die so ermittelte Differenz wird nun mit allen Gerätesignaturen verglichen. Dasjenige Gerät, dessen Wert am nächsten bei dieser Differenz liegt, wird als das Eventauslösende Gerät identifiziert.
+Falls diese Differenz positiv ist, entspricht dies einem ON-Event, d.h. ein Verbraucher wurde hinzugeschaltet. Falls sie negativ ist, entspricht dies einem OFF-Event, d.h. ein Verbraucher wurde abgeschaltet. Die so ermittelte Differenz wird nun mit allen Signaturen verglichen. Derjenige Verbraucher, dessen Wert am nächsten bei dieser Differenz liegt, wird als der eventauslösende Verbraucher identifiziert.
 
 TODO
 
-\[Differenz = |Gerät X - Differenz|\]
+\[Differenz = |Verbraucher X - Differenz|\]
 
 \chapter{Ergebnisse}
 \label{sec:teil1_kombinatorik}
 
 \section{Ansatz Kobinatorik}
-Der Ansatz mittels Kombinatorik funktioniert nicht sehr gut und stösst bald mal an seine Grenzen. Werden jeweils nur die einzelnen Geräte angeschlossen, so werden diese noch alle einwandfrei identifiziert. Bei den Zweier-Kombinationen werden dagegen nur noch rund 80 \% erkannt. Bei den Dreier-Kombinationen treten dann schon die ersten grösseren Probleme auf. 
+Der Ansatz mittels Kombinatorik funktioniert nicht sehr gut und stösst bald mal an seine Grenzen. Werden jeweils nur die einzelnen Verbraucher angeschlossen, so werden diese noch alle einwandfrei identifiziert. Bei den Zweier-Kombinationen werden dagegen nur noch rund 80 \% erkannt. Bei den Dreier-Kombinationen treten dann schon die ersten grösseren Probleme auf. 
 \begin{itemize}
-\item Geräte mit hohem Verbrauch konnten nicht in Kombination getestet werden, da nur eine Phase verwendet wurde. Dies führte auf dieser Phase zu einer Überlast.
-\item Der gemessene Verbrauch eines Gerätes ist in Kombination mit anderen Geräten etwas niedriger als wenn das Gerät einzeln gemessen wird. Die Folge davon ist, dass andere Kombinationen teilweise näher am gemessenen Wert liegen als die eigentliche Kombination.
-\item Die Anzahl an Kombinationen steigt mit zunehmender Anzahl Verbrauchern enorm an. Sind es bei sieben Geräten noch überschaubare 127 Gerätekombinationen, so sind es bei 20 Geräten bereits 1'048'575 Kombinationen. Dies wirkt sich negativ auf die Performance aus.
+\item Verbraucher mit hohem Verbrauch konnten nicht in Kombination getestet werden, da nur eine Phase verwendet wurde. Dies führte auf dieser Phase zu einer Überlast.
+\item Der gemessene Verbrauch eines Verbrauchers ist in Kombination mit anderen Verbrauchern etwas niedriger als wenn der Verbraucher einzeln gemessen wird. Die Folge davon ist, dass andere Kombinationen teilweise näher am gemessenen Wert liegen als die eigentliche Kombination.
+\item Die Anzahl an Kombinationen steigt mit zunehmender Anzahl Verbrauchern enorm an. Sind es bei sieben Verbrauchern noch überschaubare 127 Kombinationen, so sind es bei 20 Verbrauchern bereits 1'048'575 Kombinationen. Dies wirkt sich negativ auf die Performance aus.
 \end{itemize}
-
-TODO: Replace Geräte mit Verbraucher
 
 \section{Ansatz Eventbasiert}
 Der in dieser Arbeit verwendete eventbasierte Ansatz ist sehr einfach gehalten und funktioniert wohl deshalb auch nicht einwandfrei. Einzelne Verbraucher werden jeweils einwandfrei identifiziert.
@@ -147,7 +145,7 @@ Der eventbasierte Ansatz hat sicher mehr Potential als der kombinatorische Ansat
 
 \chapter{Ansatz Machine Learning}
 \label{sec:teil1_kombinatorik}
-Der Ansatz mittels Kombinatorik weist, wie schon im vorherigen Kapitel erwähnt, noch einige Probleme auf und ist für eine präzise Disaggregation somit nicht geeignet. Es wird ein Modell benötigt, welches robust ist, auch wenn die Anzahl der Geräte erhöht wird. Ausserdem sollten auch Multistatusgeräte klassifiziert werden können, wie beispielsweise ein Staubsauger oder eine Waschmaschine. Und auch Geräte mit ähnlichem Verbrauch sollte das Modell erkennen können.
+Der Ansatz mittels Kombinatorik weist, wie schon im vorherigen Kapitel erwähnt, noch einige Probleme auf und ist für eine präzise Disaggregation somit nicht geeignet. Es wird ein Modell benötigt, welches robust ist, auch wenn die Anzahl der Verbraucher erhöht wird. Ausserdem sollten auch Multistatus-Verbraucher klassifiziert werden können, wie beispielsweise ein Staubsauger oder eine Waschmaschine. Und auch Verbraucher mit ähnlichem Verbrauch sollte das Modell erkennen können.
 
 
 
