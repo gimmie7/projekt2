@@ -114,13 +114,14 @@ Diejenige Kombination mit der kleinsten Differenz zu den effektiven Messdaten wi
 \label{sec:teil1_kombinatorik}
 Beim eventbasierten Ansatz werden kontinuierlich Messungen durchgeführt und auf Events reagiert. Die gemessenen Werte werden zwischengespeichert und bei der nächsten Messung wird die Differenz daraus gebildet. Ist die Differenz grösser als der Schwellwert von 25W Wirkleistung, wird dies als ein Event interpretiert. 
 
-\[Differenz = Messung zum Zeitpunkt t1 - Messung zum Zeitpunkt t2\]
+\[Differenz_E = Messung_t1 - Messung_t2 t2\]
 
-Falls diese Differenz positiv ist, entspricht dies einem ON-Event, d.h. ein Verbraucher wurde hinzugeschaltet. Falls sie negativ ist, entspricht dies einem OFF-Event, d.h. ein Verbraucher wurde abgeschaltet. Die so ermittelte Differenz wird nun mit allen Signaturen verglichen. Derjenige Verbraucher, dessen Wert am nächsten bei dieser Differenz liegt, wird als der eventauslösende Verbraucher identifiziert.
+Messung_t1 entspricht dabei einer Messung zum Zeitpunkt t1, Messung_t2 einer Messung zum Zeitpunkt t2.
+Falls diese Differenz positiv ist, entspricht dies einem ON-Event, d.h. ein Verbraucher wurde hinzugeschaltet. Falls sie negativ ist, entspricht dies einem OFF-Event, d.h. ein Verbraucher wurde abgeschaltet. Die so ermittelte Differenz wird nun mit allen Signaturen verglichen. 
 
-TODO
+\[Differenz_V = |Verbraucher_V - Differenz_E|\]
 
-\[Differenz = |Verbraucher X - Differenz|\]
+Derjenige Verbraucher, dessen Differenz am nächsten bei dieser Differenz liegt, wird als der eventauslösende Verbraucher identifiziert.
 
 \chapter{Ergebnisse}
 \label{sec:teil1_kombinatorik}
